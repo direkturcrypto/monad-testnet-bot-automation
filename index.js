@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {ethers, parseEther} = require('ethers')
 const RPC_URL = "https://testnet-rpc.monad.xyz"
 const PRIVATE_KEY = process.env.PK
@@ -17,7 +18,7 @@ const { wrapMonad, unwrapMonad } = require('./apps/wmon')
 const { transferTokens, listTokens } = require('./apps/transfer')
 const { hedgemonySwap } = require('./apps/hedgemony')
 
-const hedgeAccessToken = "" // change with your account hedgeAccessToken
+const hedgeAccessToken = process.env.hedgeAccessToken // change with your account hedgeAccessToken
 
 const main = async () => {
     const amountSwap = parseEther((Math.random() * 0.004 + 0.001).toFixed(3).toString())
