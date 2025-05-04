@@ -45,19 +45,14 @@ exports.swap = async (pk, from, to, amountSwap) => {
   if (from == "ETH") {
     console.log(`swap ${formatEther(amountSwap)} ETH to ${to}`)
     txSwap = await routerContract.swapExactETHForTokensSupportingFeeOnTransferTokens(0, ["0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701", to], wallet.address, new Date().getTime() + 3600, {
-        value: amountSwap,
-        gasLimit: 200000
+        value: amountSwap
     }).catch((e) => ({status: 500, message: e.shortMessage}))
   } else if (to == "ETH") {
     console.log(`swap token to ETH`)
-    txSwap = await routerContract.swapExactTokensForETHSupportingFeeOnTransferTokens(amountSwap, 0, [from, "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701"], wallet.address, new Date().getTime() + 3600, {
-        gasLimit: 200000
-    }).catch((e) => ({status: 500, message: e.shortMessage}))
+    txSwap = await routerContract.swapExactTokensForETHSupportingFeeOnTransferTokens(amountSwap, 0, [from, "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701"], wallet.address, new Date().getTime() + 3600).catch((e) => ({status: 500, message: e.shortMessage}))
   } else {
     console.log(`swap token to token`)
-    txSwap = await routerContract.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountSwap, 0, [from, to], wallet.address, new Date().getTime() + 3600, {
-        gasLimit: 200000
-    }).catch((e) => ({status: 500, message: e.shortMessage}))
+    txSwap = await routerContract.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountSwap, 0, [from, to], wallet.address, new Date().getTime() + 3600).catch((e) => ({status: 500, message: e.shortMessage}))
   }
 
   if (txSwap.status != 500) {
@@ -122,8 +117,7 @@ exports.addLiquidityETH = (pk, tokenAddress, amountETH) => {
                 wallet.address,
                 new Date().getTime() + 3600,
                 {
-                    value: amountETH,
-                    gasLimit: 500000
+                    value: amountETH
                 }
             ).catch((e) => ({status: 500, message: e.shortMessage}))
 
@@ -197,10 +191,7 @@ exports.withdrawLiquidityETH = (privateKey, liquidityAmount, lpAddress, tokenAdd
                 0, // amountTokenMin
                 0, // amountETHMin
                 wallet.address,
-                new Date().getTime() + 3600,
-                {
-                    gasLimit: 1000000
-                }
+                new Date().getTime() + 3600
             ).catch((e) => ({status: 500, message: e.shortMessage}));
 
             if (gasEstimate.status === 500) {
