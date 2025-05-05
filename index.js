@@ -224,7 +224,7 @@ async function runWalletActions(walletInstance, pk) {
         async () => {
             try {
                 // Get the pair address for USDC/ETH
-                const ROUTER_ABI = require('../abis/uniswapV2.json')
+                const ROUTER_ABI = require('./abis/uniswapV2.json')
                 const ROUTER_ADDRESS = "0xCa810D095e90Daae6e867c19DF6D9A8C56db2c89"
                 const routerContract = new ethers.Contract(ROUTER_ADDRESS, ROUTER_ABI, walletInstance);
                 const factoryAddress = await routerContract.factory();
